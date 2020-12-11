@@ -3,8 +3,8 @@ header("Access-Control-Allow-Origin: *");
 require_once("./../connection.php");
 
 $conn = new mysqli($servername, $username, $password, $db_name);
- $json = (file_get_contents('php://input', true));
- $post = json_decode($json, true);
+ $json = (file_get_contents('php://input',true));
+ $post = json_decode($json,true);
  $RegionID=$post['reg'];
 
 //$RegionID=$_post[`RegionID`];
@@ -42,6 +42,7 @@ mysqli_set_charset($conn, "utf8");
     $i=0;
 
     while ($row=mysqli_fetch_array($query)) {
+ 
         $lat=$row['latitude'];
         $long=$row['longitude'];
         $properties1=array('title'=> $row['ShopName'],'description'=> $row['phone'] ,'address'=>  $row['Address']);
@@ -49,10 +50,11 @@ mysqli_set_charset($conn, "utf8");
         $features += ["$i" =>$arr ];
 
         $i++;
+
     }
     
 $data=
 array('type' => 'FeatureCollection','features' => $features);
-echo json_encode($data, JSON_UNESCAPED_UNICODE);
+echo json_encode($data,JSON_UNESCAPED_UNICODE);
 
 //}
